@@ -28,6 +28,7 @@ export class UploadPanelComponent {
       this.http.post('http://localhost:3000/api/upload', formData).subscribe({
         next: response => {
           console.log('Upload successful', response)
+          this.selectedFileName = '';
           alert('File uploaded successfully!');
         },
         error: error => {
