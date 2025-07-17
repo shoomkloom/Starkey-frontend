@@ -1,6 +1,27 @@
 .chat-window {
-  height: 200px;
+  height: 300px;
+  max-height: 300px;
   border: 1px solid #ccc;
   overflow-y: auto;
   padding: 10px;
+}
+
+.msgUser {
+  color: blue;
+  font-weight: bold;
+}
+
+.msgAssistant {
+  color: purple;
+  font-weight: bold;
+}
+
+.msgText {
+  color: black;
+}
+
+.msgSource {
+  font-size: small;
+  color: green;
+  font-style: italic;
 }
