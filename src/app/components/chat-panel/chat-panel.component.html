@@ -1,0 +1,7 @@
+<div>
+  <label class="form-label">Chat Window:</label>
+  <div class="chat-window mb-2">
+    <div *ngFor="let msg of messages" class="border-bottom py-1">{{ msg }}</div>
+  </div>
+  <input type="text" class="form-control" [(ngModel)]="currentMessage" (keyup.enter)="sendMessage()" />
+</div>

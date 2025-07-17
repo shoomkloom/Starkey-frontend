@@ -1,0 +1,8 @@
+<div class="mb-3">
+  <label class="form-label">Upload File:</label>
+  <input type="file" class="form-control" (change)="onFileSelected($event)" />
+</div>
+<div class="mb-3">
+  <label class="form-label">Web Link:</label>
+  <input type="text" class="form-control" [(ngModel)]="webLink" />
+</div>

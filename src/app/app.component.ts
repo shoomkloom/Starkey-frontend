@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { UploadPanelComponent } from './components/upload-panel/upload-panel.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { ChatPanelComponent } from './components/chat-panel/chat-panel.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterModule, UploadPanelComponent, AdminPanelComponent, ChatPanelComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'frontend';
-}
+export class AppComponent {}
