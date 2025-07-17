@@ -8,17 +8,22 @@
 </div>
 <div class="mb-2">
   <label class="form-label">History Length:</label>
-  <input type="number" class="form-control" [(ngModel)]="historyLength" />
+  <input type="number" class="form-control" min="1" [(ngModel)]="historyLength" />
 </div>
 <div class="mb-2">
   <label class="form-label">Temperature:</label>
-  <input type="number" class="form-control" [(ngModel)]="temperature" step="0.1" />
+  <input type="number" class="form-control" min="0" [(ngModel)]="temperature" step="0.1" />
 </div>
 <div class="mb-2">
   <label class="form-label">Num top files:</label>
-  <input type="number" class="form-control" [(ngModel)]="numTopFiles" />
+  <input type="number" class="form-control" min="1" [(ngModel)]="numTopFiles" />
 </div>
 <div class="mb-2">
   <label class="form-label">Num top links:</label>
-  <input type="number" class="form-control" [(ngModel)]="numTopLinks" />
+  <input type="number" class="form-control" min="1" [(ngModel)]="numTopLinks" />
+</div>
+<div class="mt-3 text-end">
+  <button class="btn btn-primary me-2" (click)="apply()" [disabled]="!isFormValid()">Apply</button>
+  <button class="btn btn-primary" (click)="load()">Load</button>
+  <input #fileInput type="file" accept=".json" style="display: none" (change)="onFileSelected($event)" />
 </div>
