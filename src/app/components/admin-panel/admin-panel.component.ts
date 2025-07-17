@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class AdminPanelComponent {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
   
-  openApiKey = '';
+  openaiKey = '';
   modelName = 'gpt-4o';
   historyLength = 10;
   temperature = 0.2;
@@ -23,7 +23,7 @@ export class AdminPanelComponent {
 
   apply() {
     const payload = {
-      openApiKey: this.openApiKey,
+      openaiKey: this.openaiKey,
       modelName: this.modelName,
       historyLength: this.historyLength,
       temperature: this.temperature,
@@ -77,7 +77,7 @@ export class AdminPanelComponent {
       reader.onload = () => {
         try {
           const obj = JSON.parse(reader.result as string);
-          this.openApiKey = obj.openApiKey || '';
+          this.openaiKey = obj.openaiKey || '';
           this.modelName = obj.modelName || '';
           this.historyLength = obj.historyLength ?? 0;
           this.temperature = obj.temperature ?? 0.7;
@@ -94,7 +94,7 @@ export class AdminPanelComponent {
 
   isFormValid(): boolean {
     return (
-      this.openApiKey.trim() !== '' &&
+      this.openaiKey.trim() !== '' &&
       this.modelName.trim() !== '' &&
       this.historyLength > 0 &&
       this.temperature >= 0 &&
