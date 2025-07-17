@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -7,12 +8,27 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   templateUrl: './upload-panel.component.html',
   styleUrl: './upload-panel.component.css'
-})
+  })
 export class UploadPanelComponent {
-  file: File | null = null;
   webLink: string = '';
+  selectedFileName: string = '';
 
-  onFileSelected(event: any) {
-    this.file = event.target.files[0];
+  constructor(private http: HttpClient) {}
+
+  upload(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedFileName = file.name;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.http.post('http://localhost:3000/api/upload', formData).subscribe({
+        next: response => console.log('Upload successful', response),
+        error: error => console.error('Upload error', error)
+      });
+    }
   }
 }

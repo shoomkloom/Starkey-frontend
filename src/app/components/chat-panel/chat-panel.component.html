@@ -3,5 +3,10 @@
   <div class="chat-window mb-2">
     <div *ngFor="let msg of messages" class="border-bottom py-1">{{ msg }}</div>
   </div>
-  <input type="text" class="form-control" [(ngModel)]="currentMessage" (keyup.enter)="sendMessage()" />
+  <div class="input-group">
+    <input type="text" class="form-control" [(ngModel)]="currentMessage" (keyup.enter)="sendMessage()" />
+    <button class="btn btn-primary" type="button" (click)="sendMessage()">
+      <i class="bi bi-send"></i>
+    </button>
+  </div>
 </div>
