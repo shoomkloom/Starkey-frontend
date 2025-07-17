@@ -9,10 +9,15 @@
       <i class="bi bi-upload"></i>
     </button>
   </div>
-  <input #fileInput type="file" (change)="upload($event)" hidden />
+  <input #fileInput type="file" (change)="uploadFile($event)" hidden />
 </div>
 
 <div class="mb-3">
   <label class="form-label">Web Link:</label>
-  <input type="text" class="form-control w-100" [(ngModel)]="webLink" />
+  <div class="input-group">
+    <input type="text" class="form-control" [(ngModel)]="webLink" />
+    <button class="btn btn-primary linkButton" type="button" (click)="uploadLink()">
+      <i class="bi bi-upload"></i>
+    </button>
+  </div>
 </div>

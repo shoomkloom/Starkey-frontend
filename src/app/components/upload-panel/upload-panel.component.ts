@@ -15,7 +15,7 @@ export class UploadPanelComponent {
 
   constructor(private http: HttpClient) {}
 
-  upload(event: Event): void {
+  uploadFile(event: Event): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
@@ -36,6 +36,26 @@ export class UploadPanelComponent {
           alert(`File upload failed!\n\n${error.message || error}`);
         }
       });
+    }
+  }
+
+  uploadLink() {
+    if (this.webLink.trim()) {
+      this.http.post('http://localhost:3000/api/link', { link: this.webLink }).subscribe({
+        next: response => {
+          console.log('Link upload successful', response);
+          this.webLink = '';
+          alert('Link uploaded successfully!');
+        },
+        error: error => {
+          console.error('Link upload error', error);
+          alert(`Link upload failed!\n\n${error.error.error || error}`);
+        }
+      });
+    } 
+    else {
+      console.error('Please enter a valid link.');
+      alert('Please enter a valid link.');
     }
   }
 }
