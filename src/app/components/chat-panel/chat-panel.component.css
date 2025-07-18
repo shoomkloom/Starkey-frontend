@@ -25,3 +25,18 @@
   color: green;
   font-style: italic;
 }
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

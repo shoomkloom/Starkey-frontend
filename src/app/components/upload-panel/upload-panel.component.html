@@ -6,8 +6,11 @@
       (click)="fileInput.click()">
       {{ selectedFileName  }}
     </div>
-    <button class="btn btn-primary" type="button" (click)="fileInput.click()">
-      <i class="bi bi-upload"></i>
+    <button class="btn btn-primary" type="button" 
+      [disabled]="isUploadingFile"  
+      (click)="fileInput.click()">
+      <i *ngIf="!isUploadingFile" class="bi bi-upload"></i>
+      <span *ngIf="isUploadingFile" class="spinner"></span>
     </button>
   </div>
   <input #fileInput type="file" (change)="uploadFile($event)" hidden />
@@ -19,8 +22,11 @@
     <input type="text" class="form-control truncate-text" 
       [title]="webLink"
       [(ngModel)]="webLink" />
-    <button class="btn btn-primary linkButton" type="button" (click)="uploadLink()">
-      <i class="bi bi-upload"></i>
+    <button class="btn btn-primary linkButton" type="button" 
+      [disabled]="isUploadingLink" 
+      (click)="uploadLink()">
+      <i *ngIf="!isUploadingLink" class="bi bi-upload"></i>
+      <span *ngIf="isUploadingLink" class="spinner"></span>
     </button>
   </div>
 </div>

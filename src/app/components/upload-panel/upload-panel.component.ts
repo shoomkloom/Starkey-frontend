@@ -14,11 +14,19 @@ import { environment } from '../../../environments/environment';
 export class UploadPanelComponent {
   webLink: string = '';
   selectedFileName: string = '';
+  isUploadingFile = false;
+  isUploadingLink = false;
   //@@differences: string[] = [];
 
   constructor(private http: HttpClient) {}
 
   uploadFile(event: Event): void {
+    if(this.isUploadingFile == true){
+      alert('File upload already in progress. Please wait.');
+      return;
+    }
+
+    this.isUploadingFile = true;
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
@@ -32,10 +40,12 @@ export class UploadPanelComponent {
         next: response => {
           console.log('Upload successful', response)
           this.selectedFileName = '';
+          this.isUploadingFile = false;
           alert('File uploaded successfully!');
         },
         error: error => {
           console.error('Upload error', error)
+          this.isUploadingFile = false;
           alert(`File upload failed!\n\n${error.message || error}`);
         }
       });
@@ -74,14 +84,17 @@ export class UploadPanelComponent {
     @@*/
     uploadLink() {
     if (this.webLink.trim()) {
+      this.isUploadingLink = true;
       this.http.post('http://localhost:3000/api/link', { link: this.webLink }).subscribe({
         next: response => {
           console.log('Link upload successful', response);
           this.webLink = '';
+          this.isUploadingLink = false;
           alert('Link uploaded successfully!');
         },
         error: error => {
           console.error('Link upload error', error);
+          this.isUploadingLink = false;
           alert(`Link upload failed!\n\n${error.error.error || error}`);
         }
       });

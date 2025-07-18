@@ -17,34 +17,39 @@ export class ChatPanelComponent {
   
   messages: { user: string, text: string, source?: string }[] = [];
   currentMessage = '';
+  isWaiting = false;
 
   constructor(private http: HttpClient) {}
 
   sendMessage() {
-    if (this.currentMessage.trim()) {
-      this.messages.push({user: "You", text: this.currentMessage.trim(), source: ''});
-      this.scrollToBottom();
+    if (!this.currentMessage?.trim() || this.isWaiting) return;
+    this.isWaiting = true;
 
-      this.http.post<any>(`${environment.serverUrl}/api/chat`, { message: this.currentMessage }).subscribe({
-        next: (response) => {
-          let sources = '';
-          if (Array.isArray(response.excerpts)) {
-            for (const ex of response.excerpts) {
-              sources += ex.source + ', ';
-            }
+    this.messages.push({user: "You", text: this.currentMessage.trim(), source: ''});
+    this.scrollToBottom();
+
+    this.http.post<any>(`${environment.serverUrl}/api/chat`, { message: this.currentMessage }).subscribe({
+      next: (response) => {
+        this.isWaiting = false;
+        let sources = '';
+        if (Array.isArray(response.excerpts)) {
+          for (const ex of response.excerpts) {
+            sources += ex.source + ', ';
           }
-          sources = sources.slice(0, -2); // Remove trailing comma and space
-          this.messages.push({ user: 'Assistant', text: response.summary, source: sources });
-          this.scrollToBottom();
-        },
-        error: (error) => {
-          console.error('Chat error', error);
-          alert(`An error occurred while sending the message.\n\n${error.error.error}\n${error.message}`);
         }
-      });
+        sources = sources.slice(0, -2); // Remove trailing comma and space
+        this.messages.push({ user: 'Assistant', text: response.summary, source: sources });
+        this.scrollToBottom();
+      },
+      error: (error) => {
+        console.error('Chat error', error);
+        this.isWaiting = false;
+        alert(`An error occurred while sending the message.\n\n${error.error.error}\n${error.message}`);
+      }
+    });
 
-      this.currentMessage = '';
-    }
+    this.currentMessage = '';
+
   }
 
   scrollToBottom() {

@@ -10,9 +10,13 @@
     <input type="text" class="form-control" 
       [placeholder]="'Type your message here...'"
       [(ngModel)]="currentMessage" 
-      (keyup.enter)="sendMessage()" />
-    <button class="btn btn-primary" type="button" (click)="sendMessage()">
-      <i class="bi bi-send"></i>
+      (keyup.enter)="!isWaiting && sendMessage()"
+      [disabled]="isWaiting" />
+    <button class="btn btn-primary" type="button" 
+      [disabled]="isWaiting" 
+      (click)="sendMessage()">
+      <i *ngIf="!isWaiting" class="bi bi-send"></i>
+      <span *ngIf="isWaiting" class="spinner"></span>
     </button>
   </div>
 </div>
