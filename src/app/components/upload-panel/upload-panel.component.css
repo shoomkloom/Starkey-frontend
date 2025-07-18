@@ -18,6 +18,20 @@ input[type="text"] {
   text-overflow: ellipsis;
 }
 
+.differences-container {
+  height: 280px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.difference-added {
+  color: green;
+}
+
+.difference-removed {
+  color: red;
+}
+
 .spinner {
   width: 1rem;
   height: 1rem;

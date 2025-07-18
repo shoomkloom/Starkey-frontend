@@ -31,11 +31,13 @@
   </div>
 </div>
 
-<!--
-<div *ngIf="differences.length > 0" class="alert alert-warning mt-2">
+<div *ngIf="differences.length > 0" class="differences-container border rounded p-3 mt-3">
   <strong>Differences were detected:</strong>
-  <ul class="mb-0 mt-1 ps-3">
-    <li *ngFor="let diff of differences">{{ diff }}</li>
-  </ul>
+  <div>
+    <ul class="mb-0 mt-1 ps-3">
+      <li *ngFor="let diff of differences">
+        <span [ngClass]="{ 'difference-added': diff.type === 'added', 'difference-removed': diff.type === 'removed' }">{{ diff.type }}: </span>{{ diff.text }}
+      </li>
+    </ul>
+  </div>
 </div>
--->

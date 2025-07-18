@@ -1,5 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
@@ -7,7 +8,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-upload-panel',
   standalone: true,
-  imports: [FormsModule, NgIf, NgFor],
+  imports: [CommonModule, FormsModule, NgIf, NgFor],
   templateUrl: './upload-panel.component.html',
   styleUrl: './upload-panel.component.css'
   })
@@ -16,7 +17,7 @@ export class UploadPanelComponent {
   selectedFileName: string = '';
   isUploadingFile = false;
   isUploadingLink = false;
-  //@@differences: string[] = [];
+  differences: { type: string, text: string }[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -52,13 +53,13 @@ export class UploadPanelComponent {
     }
   }
 
-  /*@@
   uploadLink() {
     if (this.webLink.trim()) {
-      this.http.post<{message: string; differences?: string[];}>(`${environment.serverUrl}/api/link`, { link: this.webLink }).subscribe({
+      this.isUploadingLink = true;
+      this.http.post<{message: string; differences?: { type: string, text: string };}>(`${environment.serverUrl}/api/link`, { link: this.webLink }).subscribe({
         next: response => {
           console.log('Link upload successful', response);
-
+          this.isUploadingLink = false;
           if (response.differences && Array.isArray(response.differences)) {
             this.differences = response.differences;
             alert('Link already exists. Differences were detected!');
@@ -72,6 +73,7 @@ export class UploadPanelComponent {
         },
         error: error => {
           console.error('Link upload error', error);
+          this.isUploadingLink = false;
           alert(`Link upload failed!\n\n${error.message || error}`);
         }
       });
@@ -81,27 +83,5 @@ export class UploadPanelComponent {
       alert('Please enter a valid link.');
     }
   }
-    @@*/
-    uploadLink() {
-    if (this.webLink.trim()) {
-      this.isUploadingLink = true;
-      this.http.post('http://localhost:3000/api/link', { link: this.webLink }).subscribe({
-        next: response => {
-          console.log('Link upload successful', response);
-          this.webLink = '';
-          this.isUploadingLink = false;
-          alert('Link uploaded successfully!');
-        },
-        error: error => {
-          console.error('Link upload error', error);
-          this.isUploadingLink = false;
-          alert(`Link upload failed!\n\n${error.error.error || error}`);
-        }
-      });
-    } 
-    else {
-      console.error('Please enter a valid link.');
-      alert('Please enter a valid link.');
-    }
-  }
+
 }
