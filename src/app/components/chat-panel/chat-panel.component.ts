@@ -57,7 +57,6 @@ export class ChatPanelComponent {
       try {
         const el = this.chatWindowRef.nativeElement;
         el.scrollTop = el.scrollHeight;
-        /*@@*/console.log('Scrolling to', el.scrollHeight);
       } catch (err) {
         console.warn('Scroll error:', err);
       }
