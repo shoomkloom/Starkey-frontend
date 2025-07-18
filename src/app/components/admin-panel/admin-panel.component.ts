@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-panel',
@@ -32,7 +33,7 @@ export class AdminPanelComponent {
     };
 
     // Send to backend
-    this.http.post('http://localhost:3000/api/sysparams', payload).subscribe({
+    this.http.post(`${environment.serverUrl}/api/sysparams`, payload).subscribe({
       next: res => {
         console.log('Uploaded successfully', res)
         alert('System parameters updated successfully!');

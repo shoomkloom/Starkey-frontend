@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-chat-panel',
@@ -24,7 +25,7 @@ export class ChatPanelComponent {
       this.messages.push({user: "You", text: this.currentMessage.trim(), source: ''});
       this.scrollToBottom();
 
-      this.http.post<any>('http://localhost:3000/api/chat', { message: this.currentMessage }).subscribe({
+      this.http.post<any>(`${environment.serverUrl}/api/chat`, { message: this.currentMessage }).subscribe({
         next: (response) => {
           let sources = '';
           if (Array.isArray(response.excerpts)) {
