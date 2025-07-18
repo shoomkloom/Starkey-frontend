@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverUrl: 'https://your-production-server.com'
+  serverUrl: 'https://starkey-backend.onrender.com'
 };
