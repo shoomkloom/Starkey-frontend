@@ -19,8 +19,15 @@ export class AdminPanelComponent {
   temperature = 0.2;
   numTopFiles = 10;
   numTopLinks = 5;
+  diffCheckIntervalId: any;
   
   constructor(private http: HttpClient) {}
+
+  ngOnDestroy() {
+    if (this.diffCheckIntervalId) {
+      clearInterval(this.diffCheckIntervalId);
+    }
+  }
 
   apply() {
     const payload = {
@@ -63,6 +70,22 @@ export class AdminPanelComponent {
     catch (e) {
       console.error('Error saving file', e);
     }
+
+    //Start timer for automatic diffchecks
+    if (this.diffCheckIntervalId) {
+      clearInterval(this.diffCheckIntervalId);
+    }
+    this.diffCheckIntervalId = setInterval(() => {
+      this.http.get<{ message: string }>(`${environment.serverUrl}/api/diffcheck`).subscribe({
+        next: response => {
+            alert('Differences detected in All Diff Check!');
+        },
+        error: error => {
+          console.error('Diff Check error', error);
+          alert(`Diff Check error!\n\n${error.message || error}`);
+        }
+      });
+    }, 60000 * 60); // Check every hour
   }
 
   load() {
