@@ -31,13 +31,14 @@ export class ChatPanelComponent {
     this.http.post<any>(`${environment.serverUrl}/api/chat`, { message: this.currentMessage }).subscribe({
       next: (response) => {
         this.isWaiting = false;
-        let sources = '';
+        let uniqueSources = new Set<string>();
+
         if (Array.isArray(response.excerpts)) {
           for (const ex of response.excerpts) {
-            sources += ex.source + ', ';
+            uniqueSources.add(ex.source);
           }
         }
-        sources = sources.slice(0, -2); // Remove trailing comma and space
+        const sources = Array.from(uniqueSources).join(', ').trim();
         this.messages.push({ user: 'Assistant', text: response.summary, source: sources });
         this.scrollToBottom();
       },
