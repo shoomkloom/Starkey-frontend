@@ -13,8 +13,7 @@ import { environment } from '../../../environments/environment';
 export class AdminPanelComponent {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
   
-  openaiKey = '';
-  modelName = 'gpt-4o';
+  modelName = 'gpt-4.1';
   historyLength = 10;
   temperature = 0.2;
   numTopFiles = 10;
@@ -31,7 +30,6 @@ export class AdminPanelComponent {
 
   apply() {
     const payload = {
-      openaiKey: this.openaiKey,
       modelName: this.modelName,
       historyLength: this.historyLength,
       temperature: this.temperature,
@@ -100,13 +98,12 @@ export class AdminPanelComponent {
       const reader = new FileReader();
       reader.onload = () => {
         try {
-          const obj = JSON.parse(reader.result as string);
-          this.openaiKey = obj.openaiKey || '';
-          this.modelName = obj.modelName || '';
-          this.historyLength = obj.historyLength ?? 0;
-          this.temperature = obj.temperature ?? 0.7;
-          this.numTopFiles = obj.numTopFiles ?? 0;
-          this.numTopLinks = obj.numTopLinks ?? 0;
+          const sysParams = JSON.parse(reader.result as string);
+          this.modelName = sysParams.modelName || '';
+          this.historyLength = sysParams.historyLength ?? 0;
+          this.temperature = sysParams.temperature ?? 0.7;
+          this.numTopFiles = sysParams.numTopFiles ?? 0;
+          this.numTopLinks = sysParams.numTopLinks ?? 0;
         } 
         catch (e) {
           console.error('Failed to parse JSON:', e);
@@ -118,7 +115,6 @@ export class AdminPanelComponent {
 
   isFormValid(): boolean {
     return (
-      this.openaiKey.trim() !== '' &&
       this.modelName.trim() !== '' &&
       this.historyLength > 0 &&
       this.temperature >= 0 &&
